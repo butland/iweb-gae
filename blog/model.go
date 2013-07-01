@@ -59,3 +59,9 @@ type IndexData struct {
 }
 
 type NewString string
+
+type Message struct {
+	Ok     bool
+	Text   string
+	Object interface{}
+}
