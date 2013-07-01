@@ -9,10 +9,11 @@ import (
 func init() {
 
 	mux := routes.New()
-	mux.Get("/blog/:id", ViewArticleHandler)
+	mux.Get("/blog/:id", ApiGetArticleHandler)
+	//mux.Get("/blog/:id", ViewArticleHandler)
 
 	// url like /blog/2013/05/08/golang
-	mux.Get("/blog/:year([0-9]{4})/:month([0-9]{2})/:day([0-9]{2})/:title", ViewArticleHandler)
+	mux.Get("/blog/:year([0-9]{4})/:month([0-9]{2})/:day([0-9]{2})/:title", ApiGetArticleHandler)
 	mux.Get("/blog/tag/:tag", TagHandler)
 	mux.Get("/blog/archive/:year([0-9]{4})/:month([0-9]{2})", ArchiveHandler)
 
@@ -39,6 +40,7 @@ func init() {
 
 	mux.Get("/api/blog", ApiIndexHandler)
 	mux.Get("/api/blog/article", ApiArticleHandler)
+	mux.Get("/api/blog/article/:id", ApiGetArticleHandler)
 
 	http.Handle("/", mux)
 }
