@@ -1,0 +1,48 @@
+.article {
+  border-radius: 6px;
+  padding: 14px;
+  position: relative;
+  text-align: left;
+}
+.article.article-hot:before {
+  background: url(../images/tile/ribbon.png) 0 0 no-repeat;
+  background-size: 82px 82px;
+  content: '';
+  height: 82px;
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 82px;
+}
+.article p {
+  font-size: 15px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.article-image {
+  height: 100px;
+  margin: 31px 0 27px;
+  vertical-align: bottom;
+}
+.article-image.big-illustration {
+  height: 111px;
+  margin-top: 20px;
+  width: 112px;
+}
+.article-title {
+  font-size: 20px;
+  margin: 0;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 2) {
+  .article.article-hot:before {
+    background-image: url(../images/tile/ribbon-2x.png);
+  }
+}
+
+
+.comment {
+  border-radius: 6px;
+  padding: 14px;
+  position: relative;
+  text-align: left;
+}
