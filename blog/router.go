@@ -41,6 +41,7 @@ func init() {
 	mux.Get("/api/blog", ApiIndexHandler)
 	mux.Get("/api/blog/article", ApiArticleHandler)
 	mux.Get("/api/blog/article/:id", ApiGetArticleHandler)
+	mux.Get("/api/blog/comment", GetCommentHandler)
 
 	http.Handle("/", mux)
 }

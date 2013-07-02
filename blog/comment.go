@@ -57,7 +57,7 @@ func DeleteCommentHandler(w http.ResponseWriter, r *http.Request) {
 func ListCommentHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := GetContext()
 	ctx.GAEContext = appengine.NewContext(r)
-	beginTime := time.Now()
+	//beginTime := time.Now()
 	if r.FormValue("size") != "" {
 		size, err := strconv.Atoi(r.FormValue("size"))
 		if err != nil {
@@ -84,20 +84,39 @@ func ListCommentHandler(w http.ResponseWriter, r *http.Request) {
 		serveError(w, err)
 		return
 	}
-	data := make(map[string]interface{})
-	data["data"] = comments
-	prePageSize := ctx.Args["pageSize"].(int) - 1
-	ctx.Args["prePageSize"] = prePageSize
-	if prePageSize > 0 {
-		ctx.Args["hasPre"] = true
+	bytes, _ := json.Marshal(comments)
+	writeJSON(w, bytes)
+	/*
+		data := make(map[string]interface{})
+		data["data"] = comments
+		prePageSize := ctx.Args["pageSize"].(int) - 1
+		ctx.Args["prePageSize"] = prePageSize
+		if prePageSize > 0 {
+			ctx.Args["hasPre"] = true
+		}
+		nextPageSize := ctx.Args["pageSize"].(int) + 1
+		ctx.Args["nextPageSize"] = nextPageSize
+
+		ctx.Args["url"] = r.URL.Path
+		endTime := time.Now()
+		ctx.Args["costtime"] = endTime.Sub(beginTime)
+		data["args"] = ctx.Args
+
+		commentTPL.ExecuteTemplate(w, "main", data)
+	*/
+}
+
+func GetCommentHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext()
+	ctx.GAEContext = appengine.NewContext(r)
+	// get comments
+	comment := &Comment{ArticleId: r.FormValue("id")}
+	comments, err := comment.GetAll(ctx)
+
+	if err != nil {
+		serveError(w, err)
+		return
 	}
-	nextPageSize := ctx.Args["pageSize"].(int) + 1
-	ctx.Args["nextPageSize"] = nextPageSize
-
-	ctx.Args["url"] = r.URL.Path
-	endTime := time.Now()
-	ctx.Args["costtime"] = endTime.Sub(beginTime)
-	data["args"] = ctx.Args
-
-	commentTPL.ExecuteTemplate(w, "main", data)
+	bytes, _ := json.Marshal(comments)
+	writeJSON(w, bytes)
 }

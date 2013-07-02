@@ -85,10 +85,10 @@
         {{$article.Text}}
     </div>
 
-    <div class="comment">
+    <div class="comment comment-list">
           <h3>Comments</h3>
           {{with $article.Comments}}
-          <ul class="media-list">
+          <ul class="media-list" id="commentList">
           {{$comments := $article.Comments}}
           {{range $comment := $comments}}
             <li class="media">
@@ -106,11 +106,10 @@
           <p>no comment.</p>
           {{end}}
     </div>
-    <div class="comment">
+    <div class="comment comment-post">
           <form method="post" autocomplete="on" action="/blog/comment" id ="postComment" > 
             <fieldset>
               <h3>Leave a Comment</h3>
-              
               <input type="hidden" name="urlStr" value="/blog/{{$a.PostTime.Format "2006/01/02"}}/{{$a.Title}}">
               <input type="hidden" name="articleId" value="{{$a.Id}}">
               <div class="controls">
@@ -119,26 +118,29 @@
               <div class="controls">
                 <input type="email" name="email" class="input-xlarge" placeholder="Your email">
               </div>
-        
               <div class="controls">
                 <input type="text" name="website" class="input-xlarge" placeholder="Your website">
               </div>
-               <div class="container">
-<div class="row">
-  <div class="span9">     
-  </div>
-<div class="span3"> 
-  <p align="center" data-toggle="tooltip" title="Comment is Save!"></p>
-</div>    
-</div>    
-</div>     
+
+              <!-- comment message -->
+              <div class="container">
+                <div class="row">
+                  <div class="span9">     
+                  </div>
+                  <div class="span3" id ="commentTip"> 
+                    <!--
+                    <p align="center" id ="commentMessage" data-toggle="tooltip" title="ok"></p> 
+                  -->
+                  </div>    
+                </div>    
+              </div>  
+
               <div class="controls">
                 <textarea rows="5" name="content" class="span6" placeholder="Your comment" required></textarea>
               </div>
               <div class="controls">  
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
-              
             </fieldset>
           </form>
         </div>
@@ -168,6 +170,6 @@
     <script src="/themes/flat/js/jquery.placeholder.js"></script>
     <script src="/themes/flat/js/jquery.stacktable.js"></script>
     <script src="/themes/flat/js/application.js"></script>
-    <script src="/themes/flat/js/api.js"></script>   
+    <script src="/themes/flat/js/view.js"></script>   
   </body>
 </html>
