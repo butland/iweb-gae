@@ -14,15 +14,13 @@
     </style>
     <!-- Loading Flat UI -->
     <link href="/themes/flat/css/flat-ui.css" rel="stylesheet">
-    <!-- Customer -->
-    <link href="/themes/flat/css/app.css" rel="stylesheet">
-    
+
+    <link rel="shortcut icon" href="images/favicon.ico">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
     <![endif]-->
-
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -67,84 +65,20 @@
     <div class="container">
       <div class="demo-headline">
         <h1 class="demo-logo">
-          Wendyeq          
+          Wendyeq
+          
         </h1>
       </div> <!-- /demo-headline -->
 
-
-      {{$article := .article}}
-      {{$a := $article.MetaData}}
-      <div class="article">
-        <h1>{{$a.Title}}</h1>
-        <p>{{$a.PostTime.Format "2006/01/02"}} 标签：
-          {{range $tag := $a.Tags}}
-            <a href="/blog/tag/{{$tag}}">{{$tag}}</a> 
-          {{end}}
-        </p>
-                
-        {{$article.Text}}
-    </div>
-
-    <div class="comment comment-list">
-          <h3>Comments</h3>
-          {{with $article.Comments}}
-          <ul class="media-list" id="commentList">
-          {{$comments := $article.Comments}}
-          {{range $comment := $comments}}
-            <li class="media">
-              <a class="pull-left" href="#">
-                <img class="media-object" src="/themes/flat/bootstrap/img/holder.png">
-              </a>
-              <div class="media-body">
-                <h6 class="media-heading">Written by {{$comment.Author}} on {{$comment.PostTime.Format "2006/01/02"}}</h6>
-                {{$comment.Content}}      
-              </div>
-            </li>
-            {{end}}
-          </ul>
-          {{else}}
-          <p>no comment.</p>
-          {{end}}
-    </div>
-    <div class="comment comment-post">
-          <form method="post" autocomplete="on" action="/blog/comment" id ="postComment" > 
-            <fieldset>
-              <h3>Leave a Comment</h3>
-              <input type="hidden" name="urlStr" value="/blog/{{$a.PostTime.Format "2006/01/02"}}/{{$a.Title}}">
-              <input type="hidden" name="articleId" value="{{$a.Id}}">
-              <div class="controls">
-                <input type="text" name="name" class="input-xlarge" placeholder="Your name" >
-              </div>
-              <div class="controls">
-                <input type="email" name="email" class="input-xlarge" placeholder="Your email">
-              </div>
-              <div class="controls">
-                <input type="text" name="website" class="input-xlarge" placeholder="Your website">
-              </div>
-
-              <!-- comment message -->
-              <div class="container">
-                <div class="row">
-                  <div class="span9">     
-                  </div>
-                  <div class="span3" id ="commentTip"> 
-                    <!--
-                    <p align="center" id ="commentMessage" data-toggle="tooltip" title="ok"></p> 
-                  -->
-                  </div>    
-                </div>    
-              </div>  
-
-              <div class="controls">
-                <textarea rows="5" name="content" class="span6" placeholder="Your comment" required></textarea>
-              </div>
-              <div class="controls">  
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </fieldset>
-          </form>
+      <div class="row demo-tiles" id="article-list">
+        <div class="span6" id="article-left">
         </div>
 
+        <div class="span6" id="article-right">
+        </div> <!-- span -->
+      </div><!-- row -->
+      <div class="article"></div>
+      
     </div> <!-- /container -->
 
     <footer>
@@ -170,6 +104,55 @@
     <script src="/themes/flat/js/jquery.placeholder.js"></script>
     <script src="/themes/flat/js/jquery.stacktable.js"></script>
     <script src="/themes/flat/js/application.js"></script>
-    <script src="/themes/flat/js/view.js"></script>   
+    <script src="/themes/flat/js/api.js"></script>
+    
+<!--    
+    <script>
+
+        //windo.location.pathname will give you path, after http://
+        var path = window.location.pathname;
+        alert("window.location.pathname : " + path);
+
+        var href = window.location.href;
+        alert("window.location.href : " + href);
+
+        var hash = window.location.hash;
+        alert("window.location.hash : " + hash);
+
+        $(document).ready(function(){
+            //JQuery code for getting current URL
+            var URL = $(location).attr('href');
+            alert("Current URL Using JQuery : " + URL);
+          });
+
+        $(function(){
+          showTab();
+          $(window).bind('hashchange', function(e){
+            showTab();
+          });
+          $("#tab1_header").click(showTab1);
+          $("#tab2_header").click(showTab2);
+        });
+
+        function showTab() {
+          if (window.location.hash == "#tab2"){
+            showTab2();
+          } else {
+            showTab1();
+          }
+        }
+        function showTab1() {
+          $("#tab2").hide();
+          $("#tab1").show();
+          window.location.hash = "#tab1";
+        };
+        function showTab2() {
+          $("#tab1").hide();
+          $("#tab2").show();
+          window.location.hash = "#tab2";
+        };
+       
+    </script>
+-->
   </body>
 </html>

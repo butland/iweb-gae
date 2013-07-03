@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Wendyeq Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="/themes/flat/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+    <!-- Loading Flat UI -->
+    <link href="/themes/flat/css/flat-ui.css" rel="stylesheet">
+    <!-- Customer -->
+    <link href="/themes/flat/css/app.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+          <div class="nav-collapse collapse" id="nav-collapse-01">
+            <ul class="nav">
+              <li class="active">
+                <a href="/">
+                  Home
+                </a>
+                <ul>
+                  <li><a href="#fakelink">Archive</a></li>
+                  <li>
+                    <a href="#fakelink">Tags</a>
+                    <ul>
+                      <li><a href="#fakelink">Element One</a></li>
+                      <li><a href="#fakelink">Element Two</a></li>
+                      <li><a href="#fakelink">Element Three</a></li>
+                    </ul> <!-- /Sub menu -->
+                  </li>
+                  <li><a href="#fakelink">Element Three</a></li>
+                </ul> <!-- /Sub menu -->
+              </li>
+              <li>
+                <a href="http://sosimilar.wendyeq.me">
+                  Sosimilar
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/wendyeq">
+                  Github
+                </a>
+              </li>
+            </ul>
+          </div><!--/.nav -->
+        </div>
+      </div>
+    </div><!-- navbar -->
+
+    <div class="container">
+      <div class="demo-headline">
+        <h1 class="demo-logo">
+          Wendyeq          
+        </h1>
+      </div> <!-- /demo-headline -->
+
+
+      {{$article := .article}}
+      {{$a := $article.MetaData}}
+      <div class="article">
+        <h1>{{$a.Title}}</h1>
+        <p>{{$a.PostTime.Format "2006/01/02"}} 标签：
+          {{range $tag := $a.Tags}}
+            <a href="/blog/tag/{{$tag}}">{{$tag}}</a> 
+          {{end}}
+        </p>
+                
+        {{$article.Text}}
+    </div>
+
+    <div class="comment comment-list">
+          <h3>Comments</h3>
+          <ul class="media-list" id="commentList"></ul>
+          <!--
+          {{with $article.Comments}}
+          <ul class="media-list" id="commentList">
+          {{$comments := $article.Comments}}
+          {{range $comment := $comments}}
+            <li class="media">
+              <a class="pull-left" href="#">
+                <img class="media-object" src="/themes/flat/bootstrap/img/holder.png">
+              </a>
+              <div class="media-body">
+                <h6 class="media-heading">Written by {{$comment.Author}} on {{$comment.PostTime.Format "2006/01/02"}}</h6>
+                {{$comment.Content}}      
+              </div>
+            </li>
+            {{end}}
+          </ul>
+          {{else}}
+          <p>no comment.</p>
+          {{end}}
+        -->
+    </div>
+    <div class="comment comment-post">
+          <form method="post" autocomplete="on" action="/blog/comment" id ="postComment" > 
+            <fieldset>
+              <h3>Leave a Comment</h3>
+              <input type="hidden" name="urlStr" value="/blog/{{$a.PostTime.Format "2006/01/02"}}/{{$a.Title}}">
+              <input type="hidden" name="articleId" value="{{$a.Id}}">
+              <div class="controls">
+                <input type="text" name="name" class="input-xlarge" placeholder="Your name" >
+              </div>
+              <div class="controls">
+                <input type="email" name="email" class="input-xlarge" placeholder="Your email">
+              </div>
+              <div class="controls">
+                <input type="text" name="website" class="input-xlarge" placeholder="Your website">
+              </div>
+
+              <!-- comment message -->
+              <div class="container">
+                <div class="row">
+                  <div class="span9">     
+                  </div>
+                  <div class="span3" id ="commentTip"> 
+                    <!--
+                    <p align="center" id ="commentMessage" data-toggle="tooltip" title="ok"></p> 
+                  -->
+                  </div>    
+                </div>    
+              </div>  
+
+              <div class="controls">
+                <textarea rows="5" name="content" class="span6" placeholder="Your comment" required></textarea>
+              </div>
+              <div class="controls">  
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+    </div> <!-- /container -->
+
+    <footer>
+      <div class="container">
+        <div class="row">    
+          <div class="span12">
+          <p class="muted credit">&copy; 2012~2013  Wendyeq</p>
+        </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Load JS here for greater good =============================-->
+    <script src="/themes/flat/js/jquery-1.8.3.min.js"></script>
+    <script src="/themes/flat/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/themes/flat/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/themes/flat/js/bootstrap.min.js"></script>
+    <script src="/themes/flat/js/bootstrap-select.js"></script>
+    <script src="/themes/flat/js/bootstrap-switch.js"></script>
+    <script src="/themes/flat/js/flatui-checkbox.js"></script>
+    <script src="/themes/flat/js/flatui-radio.js"></script>
+    <script src="/themes/flat/js/jquery.tagsinput.js"></script>
+    <script src="/themes/flat/js/jquery.placeholder.js"></script>
+    <script src="/themes/flat/js/jquery.stacktable.js"></script>
+    <script src="/themes/flat/js/application.js"></script>
+    <script src="/themes/flat/js/view.js"></script>   
+  </body>
+</html>
