@@ -12,20 +12,20 @@ import (
 )
 
 var apiIndexTPL = template.Must(template.ParseFiles(
-	"themes/flat/home.html"))
-var apiViewTPL = template.Must(template.ParseFiles(
-	"themes/flat/view.html"))
+	"templates/flat/home.html"))
+var viewTPL = template.Must(template.ParseFiles(
+	"templates/flat/view.html"))
 
 func writeJSON(w http.ResponseWriter, bytes []byte) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Write(bytes)
 }
 
-func ApiIndexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	apiIndexTPL.Execute(w, nil)
 }
 
-func ApiArticleHandler(w http.ResponseWriter, r *http.Request) {
+func ApiListArticleHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := GetContext()
 	ctx.Args["size"] = 100
 	ctx.GAEContext = appengine.NewContext(r)
@@ -42,10 +42,9 @@ func ApiArticleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	bytes, _ := json.Marshal(articles)
 	writeJSON(w, bytes)
-
 }
 
-func ApiGetArticleHandler(w http.ResponseWriter, r *http.Request) {
+func ApiViewArticleHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := GetContext()
 	ctx.GAEContext = appengine.NewContext(r)
 	beginTime := time.Now()
@@ -104,4 +103,100 @@ func ApiGetArticleHandler(w http.ResponseWriter, r *http.Request) {
 	ctx.Args["title"] = articleMetaData.Title
 	data["args"] = ctx.Args
 	apiViewTPL.Execute(w, data)
+
+}
+
+//list article by tag
+func ApiTagHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext()
+	ctx.GAEContext = appengine.NewContext(r)
+	//beginTime := time.Now()
+	params := r.URL.Query()
+	tag := params.Get(":tag")
+	if r.FormValue("size") != "" {
+		size, err := strconv.Atoi(r.FormValue("size"))
+		if err != nil {
+			serveError(w, err)
+			return
+		}
+		ctx.Args["size"] = size
+	}
+	if r.FormValue("pageSize") != "" {
+		pageSize, err := strconv.Atoi(r.FormValue("pageSize"))
+		if err != nil {
+			serveError(w, err)
+			return
+		}
+		ctx.Args["pageSize"] = pageSize
+		if pageSize > 100 {
+			http.NotFound(w, r)
+			return
+		}
+	}
+
+	articleMetaData := &ArticleMetaData{}
+	articleMetaDatas, err := articleMetaData.GetAllByTag(ctx, tag)
+	if err != nil {
+		serveError(w, err)
+		return
+	}
+	if len(articleMetaDatas) == 0 {
+		http.NotFound(w, r)
+		return
+	}
+	articles := make([]Article, (len(articleMetaDatas)))
+	for key, value := range articleMetaDatas {
+		articles[key].MetaData = value
+		articles[key].Text = template.HTML(blackfriday.MarkdownBasic([]byte(value.Summary)))
+	}
+	bytes, _ := json.Marshal(articles)
+	writeJSON(w, bytes)
+}
+
+//show archive
+func ApiArchiveHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := GetContext()
+	ctx.GAEContext = appengine.NewContext(r)
+	//archive := r.URL.Path[len("/blog/archive/"):]
+	params := r.URL.Query()
+	year := params.Get(":year")
+	month := params.Get(":month")
+	if r.FormValue("size") != "" {
+		size, err := strconv.Atoi(r.FormValue("size"))
+		if err != nil {
+			serveError(w, err)
+			return
+		}
+		ctx.Args["size"] = size
+	}
+	if r.FormValue("pageSize") != "" {
+		pageSize, err := strconv.Atoi(r.FormValue("pageSize"))
+		if err != nil {
+			serveError(w, err)
+			return
+		}
+		ctx.Args["pageSize"] = pageSize
+		if pageSize > 100 {
+			http.NotFound(w, r)
+			return
+		}
+	}
+
+	articleMetaData := ArticleMetaData{}
+	articleMetaDatas, err := articleMetaData.GetAllByArchive(ctx, year, month)
+	if err != nil {
+		serveError(w, err)
+		return
+	}
+	if len(articleMetaDatas) == 0 {
+		http.NotFound(w, r)
+		return
+	}
+	articles := make([]Article, (len(articleMetaDatas)))
+	for key, value := range articleMetaDatas {
+		articles[key].MetaData = value
+		articles[key].Text = template.HTML(blackfriday.MarkdownBasic([]byte(value.Summary)))
+	}
+	bytes, _ := json.Marshal(articles)
+	writeJSON(w, bytes)
 }

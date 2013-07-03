@@ -37,7 +37,7 @@ $("#postComment").submit(function(event) {
     }
     setTimeout(doFinished,"5000");//启动一个定时器，5秒后隐藏
     if(data.Ok){
-      $('#commentList').empty();
+      //$('#commentList').empty();
       loadComment(articleId);
     }
   });
@@ -62,3 +62,6 @@ function loadComment(articleId){
   });
 
 }
+
+var articleId = $('#postComment').find( 'input[name="articleId"]' ).val();
+loadComment(articleId);

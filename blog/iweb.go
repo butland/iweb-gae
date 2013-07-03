@@ -34,7 +34,7 @@ var (
 	editTPL = template.Must(template.ParseFiles(
 		"templates/" + themes + "/edit.html"))
 
-	viewTPL = template.Must(template.ParseFiles(
+	oldViewTPL = template.Must(template.ParseFiles(
 		"templates/"+themes+"/view.html",
 		"templates/"+themes+"/common/header.html",
 		"templates/"+themes+"/common/footer.html"))
@@ -263,7 +263,8 @@ func ViewArticleHandler(w http.ResponseWriter, r *http.Request) {
 	ctx.Args["costtime"] = endTime.Sub(beginTime)
 	ctx.Args["title"] = articleMetaData.Title
 	data["args"] = ctx.Args
-	viewTPL.ExecuteTemplate(w, "main", data)
+	//viewTPL.ExecuteTemplate(w, "main", data)
+	apiViewTPL.Execute(w, data)
 
 }
 
@@ -338,6 +339,7 @@ func AdminHandler(w http.ResponseWriter, r *http.Request) {
 	adminTPL.ExecuteTemplate(w, "main", data)
 }
 
+/**
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := GetContext()
 	ctx.GAEContext = appengine.NewContext(r)
@@ -413,6 +415,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	data["args"] = ctx.Args
 	indexTPL.ExecuteTemplate(w, "main", data)
 }
+**/
 
 //list article by tag
 func TagHandler(w http.ResponseWriter, r *http.Request) {
