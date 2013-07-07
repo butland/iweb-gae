@@ -42,6 +42,6 @@ func init() {
 	mux.Get("/sitemap", SitemapHandler)
 	mux.Get("/release", ReleaseHandler)
 	mux.Get("/", IndexHandler)
-
+	mux.Get("/api/blog", IndexHandler)
 	http.Handle("/", mux)
 }

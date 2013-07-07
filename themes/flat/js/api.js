@@ -1,8 +1,12 @@
+var path = window.location.pathname;
+if(path=="/"){
+	path = "/api/blog/article";
+}
 var urlHash = window.location.hash;
 if(urlHash.length>0){
 	readMore();
 }else{
-	listArticle("/api/blog/article");
+	listArticle(path);
 }
 function listArticle(url){
 	$.getJSON(url, function(data) {
@@ -44,7 +48,7 @@ $(window).bind('hashchange', function(e){
 	}else{
 		$("#article-left").empty();
 		$("#article-right").empty();
-		listArticle("/api/blog/article");
+		listArticle(path);
 	}
 });
 

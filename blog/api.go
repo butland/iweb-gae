@@ -13,7 +13,7 @@ import (
 
 var apiIndexTPL = template.Must(template.ParseFiles(
 	"templates/flat/home.html"))
-var viewTPL = template.Must(template.ParseFiles(
+var apiViewTPL = template.Must(template.ParseFiles(
 	"templates/flat/view.html"))
 
 func writeJSON(w http.ResponseWriter, bytes []byte) {
