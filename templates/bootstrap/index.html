@@ -1,19 +1,19 @@
 {{define "main"}}
 {{template "header" .}}
 		{{$data := .data}}
-	    <div class="container-fluid">
-	      <div class="row-fluid">
-	        <div class="span3">
+	    <div class="container">
+	      <div class="row">
+	        <div class="col-md-3">
 	        	{{template "sidebar" $data}}
 	        </div><!--/span-->
 
-	        <div class="span9">
+	        <div class="col-md-9">
 	        	
 	        	{{$articles := $data.Articles}}
 	        	{{range $vv := $articles}}
 	        	{{$v := $vv.MetaData}}
-	        	<div class="row-fluid">
-	        		<div class="span12">
+	        	<div class="row">
+	        		<div class="col-md-12">
 	        			<div class="hero">
 	        				<h1><a href="/blog/{{$v.PostTime.Format "2006/01/02"}}/{{$v.Title}}">{{$v.Title}}</a></h1>
 	        				<p>{{$v.PostTime.Format "2006/01/02"}}  标签：
