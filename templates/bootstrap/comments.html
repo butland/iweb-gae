@@ -1,17 +1,14 @@
 {{define "main"}}
 {{template "header" .}}
         {{$data := .data}}
-        <div class="container-fluid">
-          <div class="row-fluid">
-            <div class="span3">
-               
-            </div><!--/span-->
+        <div class="container">
+          <div class="row">
 
-            <div class="span9">
+            <div class="col-md-12">
                
                 {{range $comment := $data}}
-                <div class="row-fluid">
-                    <div class="span12">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="hero">
                             <h1><a href="/admin/comment?id={{$comment.Id}}">{{$comment.Author}}</a> </h1>
                             <form method="post" action="/admin/comment/delete" name ="form1" >  

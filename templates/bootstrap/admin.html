@@ -1,19 +1,17 @@
 {{define "main"}}
 {{template "header" .}}
 		{{$data := .data}}
-	    <div class="container-fluid">
-	      <div class="row-fluid">
-	        <div class="span3">
-	        	{{template "sidebar" $data}}
-	        </div><!--/span-->
+	    <div class="container">
+	      <div class="row">
+	        
 
-	        <div class="span9">
+	        <div class="col-md-9">
 	        	
 	        	{{$articles := $data.Articles}}
 	        	{{range $vv := $articles}}
 	        	{{$v := $vv.MetaData}}
-	        	<div class="row-fluid">
-	        		<div class="span12">
+	        	<div class="row">
+	        		<div class="col-md-12">
 	        			<div class="hero">
 	        				<h1><a href="/blog/{{$v.PostTime.Format "2006/01/02"}}/{{$v.Title}}">{{$v.Title}}</a></h1>
 	        				<p><a class="btn btn-primary" href="/admin/article/edit?id={{$v.Id}}">Update</a>
@@ -30,15 +28,18 @@
 	        	</div>
 	        	<hr>
 	        	{{end}}
-	        	
-	        </div>
-	        <ul class="pager">
+	        	<ul class="pager">
 	        	
 	        	{{if .args.hasPre}}
   				<li><a href="{{.args.url}}?size={{.args.size}}&pageSize={{.args.prePageSize}}">&larr; Pre</a></li>
   				{{end}}
   				<li><a href="{{.args.url}}?size={{.args.size}}&pageSize={{.args.nextPageSize}}">Next &rarr;</a></li>
 			</ul>
+	        </div>
+	        
+			<div class="col-md-3">
+	        	{{template "sidebar" $data}}
+	        </div><!--/span-->
 	      </div><!--/row-->
 
 {{template "footer" .}}

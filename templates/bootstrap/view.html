@@ -2,7 +2,7 @@
 {{template "header" .}}
 		{{$article := .article}}
 	    	{{$a := $article.MetaData}}
-	    <div class="container-fluid">
+	    <div class="container">
 	    	<!-- Place this tag where you want the +1 button to render. -->
 	    	<h1>{{$a.Title |html}} <div class="g-plusone"></div></h1>
 
@@ -49,33 +49,41 @@
 	    		<p>no comment.</p>
 	    		{{end}}
 	    	</div>
-	    	<div >
-	    		<form method="post" autocomplete="on" action="/blog/comment" name ="form1" > 
-	    			<fieldset>
-	    				<legend>Leave a Comment</legend>
+	    	
+    		<form class="form-horizontal" role="form" method="post" autocomplete="on" action="/blog/comment" name ="form1" > 
+    			
+				<legend>Leave a Comment</legend>
+				<input type="hidden" name="urlStr" value="/blog/{{$a.PostTime.Format "2006/01/02"}}/{{$a.Title}}">
+				<input type="hidden" name="articleId" value="{{$a.Id}}">
 
-	    				<input type="hidden" name="urlStr" value="/blog/{{$a.PostTime.Format "2006/01/02"}}/{{$a.Title}}">
-	    				<input type="hidden" name="articleId" value="{{$a.Id}}">
-
-	    				<div class="controls">
-	    					<input type="text" name="name" class="input-xlarge" placeholder="Your name" >
-	    				</div>
-	    				<div class="controls">
-	    					<input type="email" name="email" class="input-xlarge" placeholder="Your email">
-	    				</div>
-	    				<div class="controls">
-	    					<input type="text" name="website" class="input-xlarge" placeholder="Your website">
-	    				</div>
-	    				<div class="controls">
-	    					<textarea rows="5" name="content" class="span6" placeholder="Your comment" required></textarea>
-	    				</div>
-	    				<div clsaa="controls">	
-	    					<button type="submit" class="btn">Submit</button>
-	    				</div>
-	    				
-	    			</fieldset>
-	    		</form>
-	    	</div>
+				<div class="form-group">   
+					<div class="col-lg-6">
+						<input type="text" name="name" class="form-control" placeholder="Your name" >
+					</div>
+				</div>
+				<div class="form-group">   
+					<div class="col-lg-6">
+						<input type="email" name="email" class="form-control" placeholder="Your email">
+					</div>
+				</div>
+				<div class="form-group">   
+					<div class="col-lg-6">
+						<input type="text" name="website" class="form-control" placeholder="Your website">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-6">
+						<textarea rows="5" name="content" class="form-control" placeholder="Your comment" required></textarea>
+					</div>
+				</div>
+				<div class="form-group">	
+					<div class="col-lg-6">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+    				    			
+    		</form>
+	    	
 
 {{template "footer" .}}
 {{end}}
