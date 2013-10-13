@@ -22,7 +22,7 @@ func init() {
 	mux.Post("/admin/article/post", SaveArticleHandler)
 	mux.Get("/admin/article/edit", EditArticleHandler)
 	mux.Post("/admin/article/update", UpdateArticleHandler)
-	mux.Post("/admin/article/delete", DeleteArticleHandler)
+	mux.Get("/admin/article/delete", DeleteArticleHandler)
 	mux.Post("/admin/article/preview", PreViewArticleHandler)
 
 	mux.Get("/admin/comment", ListCommentHandler)
